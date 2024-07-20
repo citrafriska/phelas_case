@@ -2,7 +2,8 @@ import "./App.css";
 
 import { useState, useEffect } from "react";
 import { groupBy } from "lodash";
-import BarCharts from "./component/BarCharts";
+import BarCharts from "./components/BarCharts";
+import PieChart from "./components/PieChart";
 import { Spin } from "antd";
 
 function App() {
@@ -30,6 +31,8 @@ function App() {
             dataByScenarios={dataByScenarios}
             dataByLifecycles={dataByLifecycles}
           />
+
+          <PieChart dataByStorageOptions={dataByStorageOptions} />
         </>
       ) : (
         <div
