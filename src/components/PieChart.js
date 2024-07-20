@@ -89,6 +89,7 @@ const PieChart = ({ dataByStorageOptions }) => {
                   offsetY: 10,
                 },
               },
+              colors: ["#008FFB", "#FFACAD"],
             }}
             series={[auroraTotalEnergyOutput, auroraTotalEnergyCurtailemnt]}
             type="donut"
@@ -128,6 +129,7 @@ const PieChart = ({ dataByStorageOptions }) => {
                   offsetY: 10,
                 },
               },
+              colors: ["#008FFB", "#FFACAD"],
             }}
             series={[
               noStorageTotalEnergyOutput,

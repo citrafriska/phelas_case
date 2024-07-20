@@ -1,8 +1,9 @@
 import "./App.css";
 
 import { useState, useEffect } from "react";
-import { groupBy } from "lodash";
+import { groupBy, values } from "lodash";
 import BarCharts from "./components/BarCharts";
+import Table from "./components/Table";
 import PieChart from "./components/PieChart";
 import { Spin } from "antd";
 
@@ -10,6 +11,7 @@ function App() {
   const [dataByScenarios, setDataByScenarios] = useState();
   const [dataByLifecycles, setDataByLifecycles] = useState();
   const [dataByStorageOptions, setDataByStorageOptions] = useState();
+  const [dataValues, setDataValues] = useState();
 
   useEffect(() => {
     fetch("http://localhost:3000/data/consolidated_results.json")
@@ -20,6 +22,7 @@ function App() {
         setDataByStorageOptions(
           groupBy(data, "project_structure_config.Storage.type")
         );
+        setDataValues(values(data));
       });
   }, []);
 
@@ -33,6 +36,13 @@ function App() {
           />
 
           <PieChart dataByStorageOptions={dataByStorageOptions} />
+
+          <Table
+            dataValues={dataValues}
+            dataByScenarios={dataByScenarios}
+            dataByLifecycle={dataByLifecycles}
+            dataByStorageOptions={dataByStorageOptions}
+          />
         </>
       ) : (
         <div

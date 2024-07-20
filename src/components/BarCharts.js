@@ -28,12 +28,20 @@ const BarCharts = ({ dataByScenarios, dataByLifecycles }) => {
     },
   ];
 
-  const updateGraphData = ({ series, title, dataLength, config }) => {
+  const updateGraphData = ({
+    series,
+    title,
+    dataLength,
+    stepSize,
+    options,
+  }) => {
     // Generate Scenario / Lifecycle names based on index since we don't have the data for scenario details for now
     const categories = times(
       dataLength || series[0].data.length,
       (index) => `${viewOption} ${index + 1}`
     );
+
+    if (series.length === 1) series[0].color = "#008FFB";
 
     setScenarioGraphData({
       series,
@@ -41,7 +49,7 @@ const BarCharts = ({ dataByScenarios, dataByLifecycles }) => {
       options: {
         title: { margin: 50, text: `${title} by ${viewOption}` || "" },
         xaxis: { categories },
-        yaxis: { stepSize: floor(max(series[0].data) / 4) },
+        yaxis: { stepSize: stepSize || floor(max(series[0].data) / 4) },
         chart: {
           type: "bar",
           height: 350,
@@ -185,12 +193,14 @@ const BarCharts = ({ dataByScenarios, dataByLifecycles }) => {
   const getEnergySummaryValues = () => {
     const dataValues = [
       {
-        name: "Energy Output",
-        data: getDataValues("average_energy_output"),
-      },
-      {
         name: "Energy Curtailment",
         data: getDataValues("average_energy_curtailment"),
+        color: "#FFACAD",
+      },
+      {
+        name: "Energy Output",
+        data: getDataValues("average_energy_output"),
+        color: "#008FFB",
       },
     ];
 
@@ -198,7 +208,8 @@ const BarCharts = ({ dataByScenarios, dataByLifecycles }) => {
       series: dataValues,
       title: copyTexts.energySummary,
       dataLength: dataValues[0].length,
-      config: {
+      stepSize: floor(max(dataValues[1].data) / 4),
+      options: {
         chart: {
           type: "bar",
           height: 350,
@@ -209,6 +220,7 @@ const BarCharts = ({ dataByScenarios, dataByLifecycles }) => {
         },
       },
     });
+    setCurrentSummary(null);
   };
 
   const onViewOptionClick = ({ target: { value } }) => {

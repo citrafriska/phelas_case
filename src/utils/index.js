@@ -25,6 +25,7 @@ export const copyTexts = {
   totalEnergyProductionKey: "totalEnergyProduction",
   averageRevenueKey: "averageRevenue",
   totalRevenueKey: "totalRevenue",
+  optimizationData: "Optimization Data",
 };
 
 // export const checkUniqueDatas = (data) => {
